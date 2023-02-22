@@ -15,6 +15,7 @@ import ru.kata.spring.boot_security.demo.services.RolesService;
 import ru.kata.spring.boot_security.demo.services.UsersServices;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,9 +34,9 @@ public class AdminController {
     }
 
     @GetMapping(value = "")
-    public String pageOfUsers(ModelMap model) {
+    public String pageOfUsers(ModelMap model, Principal principal) {
         model.addAttribute("list_of_users", usersServices.listOfUsers());
-
+        model.addAttribute("authorized_user", principal.getName());
         return "/admin/admin";
     }
 
@@ -58,11 +59,6 @@ public class AdminController {
         addRolesForUser(request, userRoles, newUser);
         usersServices.addUser(newUser);
         return "redirect:/admin";
-    }
-
-    @GetMapping("/user/admin_holder")
-    public String pageAdminHolder() {
-        return "/admin/admin_holder";
     }
 
     @GetMapping(value = "/user_info")

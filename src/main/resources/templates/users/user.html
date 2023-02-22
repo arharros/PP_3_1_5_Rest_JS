@@ -18,7 +18,6 @@
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>
-<!--            <th scope="col">Action</th>-->
         </tr>
         </thead>
         <tbody>
@@ -27,10 +26,6 @@
         <td th:text="${user_by_login.firstName}"/>
         <td th:text="${user_by_login.lastName}"/>
         <td th:text="${user_by_login.email}"/>
-<!--        <td>-->
-<!--            <a th:href="@{/edit_user(id=${user_by_id.idUser})}">Edit</a>-->
-<!--            <a th:href="@{/delete(id=${user_by_id.idUser})}">Delete</a>-->
-<!--        </td>-->
         </tbody>
     </table>
     <br>
