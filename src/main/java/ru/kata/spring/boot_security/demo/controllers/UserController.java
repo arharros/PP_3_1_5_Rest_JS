@@ -15,6 +15,7 @@ import java.security.Principal;
 public class UserController {
     private UsersServices usersServices;
 
+
     @Autowired
     public void setUsersServices(UsersServices usersServices) {
         this.usersServices = usersServices;
@@ -22,8 +23,8 @@ public class UserController {
 
     @GetMapping("")
     public String pageOfUser(Principal principal, Model model) {
-        User userByUserLogin = usersServices.findUserByUserLogin(principal.getName());
-        model.addAttribute("user_by_login", userByUserLogin);
-        return "/users/user";
+        model.addAttribute("user", usersServices.findUserByUserLogin(principal.getName()));
+        model.addAttribute("authorized_user", principal.getName());
+        return "/users/user" ;
     }
 }

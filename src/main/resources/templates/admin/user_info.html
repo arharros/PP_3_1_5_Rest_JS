@@ -1,40 +1,95 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Users</title>
-    <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">-->
+    <title>Admins Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
+
 <body>
-<div align="center">
-    <h1>User Info</h1>
-    <br>
-    <table border="1" cellpadding="5">
-        <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Login</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <td th:text="${user_by_id.idUser}"/>
-        <td th:text="${user_by_id.userLogin}"/>
-        <td th:text="${user_by_id.firstName}"/>
-        <td th:text="${user_by_id.lastName}"/>
-        <td th:text="${user_by_id.email}"/>
-        <td>
-            <a th:href="@{/edit_user(id=${user_by_id.idUser})}">Edit</a>
-            <a th:href="@{/delete(id=${user_by_id.idUser})}">Delete</a>
-        </td>
-        </tbody>
-    </table>
-    <br>
-    <a href="/admin">Back to users list</a>
-</div>
+    <header class="header text-bg-dark p-3">
+        <div class="container-fluid">
+            <div class="row justify-content-between">
+                <div class="col-7">
+                    <h2 th:text="${authorized_user} + ', welcome to Admins Panel'">welcome to Admins Panel</h2>
+                </div>
+                <div class="col-2 align-self-center">
+                    <div class="d-flex justify-content-end ">
+                        <a th:href="@{/logout}" class="btn btn-primary btn-sm"> Logout </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container-fluid">
+            <div class="row justify-content-between">
+                <div class="col-1 ps-0 pe-0 pt-3">
+                    <aside>
+                        <nav>
+                            <ul class="nav flex-column nav-pills">
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="/admin">Admin</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/admin/user_info">User</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </aside>
+                </div>
+                <div class="col text-bg-light p-4 min-vh-100">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="row mb-2">
+                            <h2>User information page</h2>
+                        </div>
+
+                        <div class="row p-2 border border-1 shadow-sm ">
+                            <h3>About User</h3>
+                        </div>
+                        <div class="row bg-body border border-1 shadow-sm ">
+                            <div class="container-fluid pt-3">
+                                <table class="table bg-white table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Login</th>
+                                            <th scope="col">First Name</th>
+                                            <th scope="col">Last Name</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Roles</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <td th:text="${user.getIdUser}">1</td>
+                                        <td th:text="${user.getUserLogin}"></td>
+                                        <td th:text="${user.getFirstName}" />
+                                        <td th:text="${user.getLastName}" />
+                                        <td th:text="${user.getEmail}" />
+                                        <td>
+                                            <text th:each="role : ${user.getUserRoles}"
+                                                th:text="${role.getRoleNameWithoutRole}+' '"></text>
+                                        </td>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>

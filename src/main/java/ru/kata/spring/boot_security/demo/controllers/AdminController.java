@@ -37,17 +37,11 @@ public class AdminController {
     public String pageOfUsers(ModelMap model, Principal principal) {
         model.addAttribute("list_of_users", usersServices.listOfUsers());
         model.addAttribute("authorized_user", principal.getName());
+        model.addAttribute("list_roles", rolesService.getAllRoles());
         return "/admin/admin";
     }
 
-    @GetMapping(value = "/new_user")
-    public String pageAddNewUser(Model model) {
-        List<Role> allRoles = rolesService.getAllRoles();
-        model.addAttribute("list_roles", allRoles);
-        return "/admin/new_user";
-    }
-
-    @PostMapping(value = "/new_user/save")
+    @PostMapping(value = "/save")
     public String saveUser(HttpServletRequest request) {
         User newUser = new User();
         List<Role> userRoles = new ArrayList<>();
@@ -62,31 +56,19 @@ public class AdminController {
     }
 
     @GetMapping(value = "/user_info")
-    public String pageUserInfoById(HttpServletRequest request, Model model) throws UsernameNotFoundException {
-        long userId = Long.parseLong(request.getParameter("id"));
-        if (usersServices.findUserById(userId) != null) {
-            model.addAttribute("user_by_id", usersServices.findUserById(userId));
-            return "/admin/user_info";
-        } else {
-            return "/admin/user_not_found";
-        }
+    public String pageUserInfoById(Principal principal, Model model) throws UsernameNotFoundException {
+        model.addAttribute("user", usersServices.findUserByUserLogin(principal.getName()));
+        model.addAttribute("authorized_user", principal.getName());
+        return "/admin/user_info";
     }
 
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public String deleteUserById(@RequestParam(name = "id") long id) {
         usersServices.deleteUserById(id);
         return "redirect:/admin";
     }
 
-    @GetMapping("/edit_user")
-    public String pageEditUser(@RequestParam(name = "id") long id, Model model) {
-        User userForEdit = usersServices.findUserById(id);
-        model.addAttribute("user_info", userForEdit);
-        model.addAttribute("list_roles", rolesService.getAllRoles());
-        return "/admin/edit_user";
-    }
-
-    @PostMapping("/edit_user/update")
+    @PostMapping("/update")
     public String updateUserInfo(HttpServletRequest request) {
         List<Role> userRoles = new ArrayList<>();
         User userForEdit = usersServices.findUserById(Long.parseLong(request.getParameter("id_user")));
