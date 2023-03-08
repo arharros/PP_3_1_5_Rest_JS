@@ -45,7 +45,7 @@ public class Role implements GrantedAuthority {
         return roleName;
     }
 
-    public String getRoleNameWithoutRole() {
+    public String roleNameWithoutRole() {
         return roleName.substring(roleName.lastIndexOf('_')+1);
     }
 }

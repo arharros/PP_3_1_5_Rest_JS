@@ -22,14 +22,10 @@ public class UsersServicesImp implements UsersServices {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final RolesService rolesService;
-
-
     @Autowired
-    public UsersServicesImp(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder, RolesService rolesService) {
+    public UsersServicesImp(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.rolesService = rolesService;
     }
 
     @Transactional
@@ -59,11 +55,14 @@ public class UsersServicesImp implements UsersServices {
     @Transactional
     @Override
     public void updateUser(User userForUpdate) {
+        User user = findUserById(userForUpdate.getIdUser());
+        userForUpdate.setUserLogin(user.getUserLogin());
+        userForUpdate.setPassword(user.getPassword());
         userRepository.save(userForUpdate);
     }
 
     @Override
-    public List<User> listOfUsers() {
+    public List<User> findAllUsers() {
         return userRepository.findAll(Sort.by(Sort.Order.by("idUser")));
     }
 

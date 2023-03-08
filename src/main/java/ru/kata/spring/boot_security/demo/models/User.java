@@ -139,10 +139,13 @@ public class User implements UserDetails {
     @Override
     public String toString() {
         return "User{" +
-                "userLogin='" + userLogin + '\'' +
+                "idUser=" + idUser +
+                ", userLogin='" + userLogin + '\'' +
+                ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", userRoles=" + userRoles +
                 '}';
     }
 }

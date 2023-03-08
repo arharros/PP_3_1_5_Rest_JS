@@ -73,7 +73,7 @@
                                         <td th:text="${user.getEmail}" />
                                         <td>
                                             <text th:each="role : ${user.getUserRoles}"
-                                                th:text="${role.getRoleNameWithoutRole}+' '"></text>
+                                                th:text="${role.roleNameWithoutRole}+' '"></text>
                                         </td>
 
                                     </tbody>
